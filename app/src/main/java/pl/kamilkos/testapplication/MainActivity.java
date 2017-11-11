@@ -10,18 +10,30 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int ALTERNATIVE_ACTIVITY_CODE = 1;
+    Button button;
+    Button buttonAGH;
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == ALTERNATIVE_ACTIVITY_CODE) {
+            button.setText(data.getStringExtra("buttonLabel"));
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = findViewById(R.id.button);
-        Button buttonAGH = findViewById(R.id.button2);
+        button = findViewById(R.id.button);
+        buttonAGH = findViewById(R.id.button2);
 
         button.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), AlternativeActivity.class);
             intent.putExtra("label", "new text");
-            startActivity(intent);
+            startActivityForResult(intent, ALTERNATIVE_ACTIVITY_CODE);
         });
 
         buttonAGH.setOnClickListener(view -> {
